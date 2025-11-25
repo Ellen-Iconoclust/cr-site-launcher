@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PromptBud Launch Countdown</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Load Three.js for Confetti -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <style>
+        /* Correct Space Grotesk import with proper weight range */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Space+Grotesk:wght@300..700&display=swap');
+        
+        /* Custom styles for Light Theme */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fcfcfc; /* Very light background */
+            color: #1f2937; /* Dark text for contrast */
+            display: flex;
+            flex-direction: column; /* Ensure body children stack vertically */
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Apply Space Grotesk to all headings */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* Active Glow for Timer (Purple: #A46BF5) */
+        .timer-active {
+            box-shadow: 0 0 12px 4px rgba(164, 107, 245, 0.7); /* #A46BF5 glow */
+            border-color: #A46BF5;
+            transition: box-shadow 0.5s ease-in-out, border-color 0.5s ease-in-out;
+        }
+
+        /* Inactive/Off state for Timer (Light border/shadow) */
+        .timer-off {
+            box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.1);
+            border-color: #e5e7eb;
+            transition: box-shadow 1s ease-out, border-color 1s ease-out;
+        }
+
+        .countdown-segment {
+            transition: transform 0.2s ease-out;
+        }
+        
+        /* Custom class for the countdown numbers color (Purple: #A46BF5) */
+        .countdown-number {
+            color: #A46BF5;
+        }
+
+        /* 3D Confetti Canvas Overlay */
+        #confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+
+        /* Glassy Footer Effect */
+        .glassy-footer {
+            background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white */
+            backdrop-filter: blur(5px); /* Apply blur for the glass effect */
+            -webkit-backdrop-filter: blur(5px);
+        }
+    </style>
+</head>
+<body class="p-4">
+
+    <!-- Three.js Confetti Container -->
+    <div id="confetti-container" class="opacity-0"></div>
+
+    <main class="w-full max-w-5xl mx-auto py-12 lg:py-20 text-center z-10 flex-grow">
+
+        <!-- Header and Timer -->
+        <div class="space-y-4 mb-16">
+            <!-- Primary Heading: Very large, dark text, Space Grotesk. Icon removed. -->
+            <h1 class="text-6xl sm:text-8xl lg:text-[7rem] xl:text-[9rem] font-extrabold tracking-tight text-gray-900 leading-none flex items-center justify-center">
+                PromptBud
+            </h1>
+            <!-- Secondary Heading: Coral Orange (#FF7B65), Space Grotesk font -->
+            <h2 id="countdown-heading" class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-none" 
+                style="color: #FF7B65;">
+                Releases In
+            </h2>
+            
+            <!-- Countdown Display Container (Light background, Purple border) -->
+            <div id="countdown-timer" class="mt-8 flex justify-center space-x-2 sm:space-x-4 p-4 border-2 rounded-xl mx-auto w-11/12 max-w-3xl timer-active bg-white shadow-xl">
+                
+                <!-- Days Wrapper -->
+                <div id="days-wrapper" class="countdown-segment flex flex-col items-center p-3 sm:p-5 bg-gray-50 rounded-lg min-w-[70px] sm:min-w-[100px] hover:scale-[1.02]">
+                    <span id="days" class="countdown-number text-3xl sm:text-5xl lg:text-7xl font-mono font-bold">00</span>
+                    <span class="text-xs sm:text-sm text-gray-600 uppercase tracking-wider mt-1">Days</span>
+                </div>
+
+                <!-- Separator -->
+                <div class="separator flex flex-col justify-center items-center text-3xl sm:text-5xl font-light text-gray-500">:</div>
+
+                <!-- Hours Wrapper -->
+                <div id="hours-wrapper" class="countdown-segment flex flex-col items-center p-3 sm:p-5 bg-gray-50 rounded-lg min-w-[70px] sm:min-w-[100px] hover:scale-[1.02]">
+                    <span id="hours" class="countdown-number text-3xl sm:text-5xl lg:text-7xl font-mono font-bold">00</span>
+                    <span class="text-xs sm:text-sm text-gray-600 uppercase tracking-wider mt-1">Hours</span>
+                </div>
+
+                <!-- Separator -->
+                <div class="separator flex flex-col justify-center items-center text-3xl sm:text-5xl font-light text-gray-500">:</div>
+
+                <!-- Minutes Wrapper -->
+                <div id="minutes-wrapper" class="countdown-segment flex flex-col items-center p-3 sm:p-5 bg-gray-50 rounded-lg min-w-[70px] sm:min-w-[100px] hover:scale-[1.02]">
+                    <span id="minutes" class="countdown-number text-3xl sm:text-5xl lg:text-7xl font-mono font-bold">00</span>
+                    <span class="text-xs sm:text-sm text-gray-600 uppercase tracking-wider mt-1">Minutes</span>
+                </div>
+
+                <!-- Separator -->
+                <div class="separator flex flex-col justify-center items-center text-3xl sm:text-5xl font-light text-gray-500">:</div>
+
+                <!-- Seconds Wrapper -->
+                <div id="seconds-wrapper" class="countdown-segment flex flex-col items-center p-3 sm:p-5 bg-gray-50 rounded-lg min-w-[70px] sm:min-w-[100px] hover:scale-[1.02] transition-all duration-300">
+                    <span id="seconds" class="countdown-number text-3xl sm:text-5xl lg:text-7xl font-mono font-bold">00</span>
+                    <span id="seconds-label" class="text-xs sm:text-sm text-gray-600 uppercase tracking-wider mt-1">Seconds</span>
+                </div>
+            </div>
+            
+            <!-- Target Time/Timezone Display (Darker text for contrast) -->
+            <p id="target-time-display" class="text-lg text-gray-700 mt-4 font-medium"></p>
+        </div>
+
+        <!-- Action Buttons (Explore PromptBud button) -->
+        <div id="action-buttons" class="mt-8 flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 hidden">
+            <!-- Explore PromptBud Button: Coral background, Purple hover, fully rounded, Purple hover shadow -->
+            <a href="https://promptzentest1.vercel.app" target="_blank" rel="noopener noreferrer"
+               class="flex items-center justify-center px-8 py-4 text-lg font-bold rounded-full
+                      bg-[#FF7B65] text-white /* Coral Orange background */
+                      shadow-lg shadow-[#FF7B65]/50 /* Coral Shadow */
+                      transition duration-300 ease-in-out transform hover:scale-[1.03] 
+                      hover:bg-[#A46BF5] hover:shadow-lg hover:shadow-[#A46BF5]/70 /* Purple hover background and shadow */">
+                <i data-lucide="star" class="w-5 h-5 mr-3"></i>
+                Explore PromptBud
+            </a>
+        </div>
+
+        <!-- What is PromptBud Section (White background, Dark text) -->
+        <section class="mt-20 text-left p-6 sm:p-8 bg-white rounded-2xl shadow-xl border border-gray-200">
+            <!-- Heading Color is Coral Orange (#FF7B65) -->
+            <h2 class="text-3xl font-bold text-[#FF7B65] mb-6 border-b border-gray-300 pb-2">What is PromptBud? (PromptZen)</h2>
+            <div class="space-y-4 text-gray-700 leading-relaxed text-base">
+                <p>PromptZen is a revolutionary platform designed for AI enthusiasts, prompt engineers, and creative minds to discover, share, and collaborate on the most effective AI prompts. In the rapidly evolving world of artificial intelligence, the quality of prompts determines the quality of outputs. PromptZen serves as a centralized hub where the community can contribute their most successful prompts across various AI models including ChatGPT, Midjourney, DALL-E, Stable Diffusion, and more.</p>
+                <p>Our mission is to democratize access to high-quality AI prompts and foster a community where both beginners and experts can learn from each other. Whether you're looking to generate stunning visual art, craft compelling stories, solve complex problems, or simply explore the capabilities of modern AI systems, PromptZen provides the tools and community support to help you achieve your creative goals.</p>
+                <!-- This paragraph is dark text -->
+                <p>The platform features a curated gallery of trending prompts, user submission system with admin moderation, and an intuitive interface that makes prompt discovery and sharing seamless. Every prompt on our platform is carefully reviewed to ensure quality and relevance, maintaining a high standard for our growing community of AI practitioners.</p>
+                <!-- This paragraph remains coral orange (#FF7B65) -->
+                <p class="font-semibold text-[#FF7B65]">Join us in shaping the future of human-AI collaboration. Share your insights, learn from others, and be part of the movement that's pushing the boundaries of what's possible with artificial intelligence.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer Section - Glassy White Look -->
+    <footer class="mt-20 w-full glassy-footer border-t border-gray-200 shadow-md p-6 rounded-t-xl z-10">
+        <div class="max-w-5xl mx-auto text-center text-gray-600 space-y-2">
+            <p class="text-sm flex items-center justify-center">
+                &copy; 2025 Code Ronins. All Rights Reserved.
+            </p>
+            <p class="text-xs uppercase tracking-widest text-[#A46BF5] font-bold">
+                Website Launcher
+            </p>
+        </div>
+    </footer>
+
+
+    <script>
+        // Initialize Lucide Icons after content load
+        lucide.createIcons();
+
+        // ===================================
+        // 1. CONFIGURATION
+        // ===================================
+        
+        // --- EDIT THIS CONFIGURATION TO SET THE LAUNCH TIME ---
+        
+        // Date format: YYYY-MM-DD
+        const TARGET_DATE_STR = '2025-12-06';
+        // Time format: HH:MM:SS AM/PM (e.g., 09:30:00 PM or 11:59:00 PM)
+        const TARGET_TIME_STR = '07:00:00 PM'; 
+        
+        // Use the explicit UTC offset for IST (+0530) for reliable JavaScript Date parsing.
+        const TARGET_TIMEZONE_DISPLAY = 'IST (UTC+5:30)';
+        const TARGET_TIMEZONE_OFFSET = '+0530'; 
+
+        // Combine configuration strings for JavaScript Date parsing
+        const FULL_DATE_STRING = `${TARGET_DATE_STR} ${TARGET_TIME_STR} ${TARGET_TIMEZONE_OFFSET}`;
+        const TARGET_DATE = new Date(FULL_DATE_STRING).getTime();
+
+        // --- END CONFIGURATION ---
+
+        const TWO_HOURS_MS = 2 * 60 * 60 * 1000;
+        const COUNTDOWN_INTERVAL = 1000;
+        const CONFETTI_LIFETIME_KEY = 'promptbud_confetti_end_time';
+        
+        // DOM Elements
+        const countdownTimerEl = document.getElementById('countdown-timer');
+        const countdownHeadingEl = document.getElementById('countdown-heading');
+        const actionButtonsEl = document.getElementById('action-buttons');
+        const confettiContainerEl = document.getElementById('confetti-container');
+        const targetTimeDisplayEl = document.getElementById('target-time-display'); 
+        const secondsLabelEl = document.getElementById('seconds-label');
+
+        // Time segment wrapper elements
+        const daysWrapperEl = document.getElementById('days-wrapper');
+        const hoursWrapperEl = document.getElementById('hours-wrapper');
+        const minutesWrapperEl = document.getElementById('minutes-wrapper');
+        const secondsWrapperEl = document.getElementById('seconds-wrapper');
+        const separators = document.querySelectorAll('.separator');
+
+        // Time segment value elements
+        const timeElements = {
+            days: document.getElementById('days'),
+            hours: document.getElementById('hours'),
+            minutes: document.getElementById('minutes'),
+            seconds: document.getElementById('seconds')
+        };
+        
+        let intervalId;
+        let confettiEngine = null; 
+
+        // ===================================
+        // 2. COUNTDOWN LOGIC
+        // ===================================
+
+        function formatTime(t) {
+            return t < 10 ? '0' + t : t;
+        }
+        
+        // Updates the color of all time segments to gray after launch, or purple before launch.
+        function updateTimerColors(isLaunch = false) {
+            // Restore Seconds label
+            secondsLabelEl.textContent = 'Seconds'; 
+
+            if (isLaunch) {
+                // Set all number colors to dark gray after launch
+                Object.values(timeElements).forEach(el => {
+                    el.style.color = '#737373'; // Dark gray color for all 00s
+                });
+            } else {
+                // Ensure they are purple during normal countdown
+                Object.values(timeElements).forEach(el => {
+                    el.style.color = ''; // Use CSS default (which is purple via .countdown-number)
+                });
+            }
+        }
+        
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = TARGET_DATE - now;
+
+            if (distance < 0) {
+                // Countdown is over
+                clearInterval(intervalId);
+                handleLaunch();
+                return;
+            }
+            
+            // Calculate time units
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Ensure normal colors are applied
+            updateTimerColors(false); 
+
+            // Update DOM with current values
+            timeElements.days.textContent = formatTime(days);
+            timeElements.hours.textContent = formatTime(hours);
+            timeElements.minutes.textContent = formatTime(minutes);
+            timeElements.seconds.textContent = formatTime(seconds);
+
+            // Ensure timer looks active
+            countdownTimerEl.classList.remove('timer-off');
+            countdownTimerEl.classList.add('timer-active');
+        }
+
+        function handleLaunch() {
+            const now = new Date().getTime();
+
+            // 1. Update text and appearance
+            countdownHeadingEl.textContent = "It's Launched!"; 
+            actionButtonsEl.classList.remove('hidden');
+            
+            // 2. Turn off the timer glow and apply inactive style
+            countdownTimerEl.classList.remove('timer-active');
+            countdownTimerEl.classList.add('timer-off');
+
+            // 3. Apply launch colors (gray 00s)
+            updateTimerColors(true); 
+
+            // 4. Set all time units to 00
+            Object.values(timeElements).forEach(el => {
+                el.textContent = '00';
+            });
+            
+            // 5. Confetti Logic
+            let confettiEndTime = localStorage.getItem(CONFETTI_LIFETIME_KEY);
+
+            if (!confettiEndTime) {
+                confettiEndTime = now + TWO_HOURS_MS;
+                localStorage.setItem(CONFETTI_LIFETIME_KEY, confettiEndTime);
+            }
+            
+            if (now < parseInt(confettiEndTime, 10)) {
+                confettiEngine = new ConfettiEngine();
+                confettiEngine.start();
+                
+                const remainingDuration = parseInt(confettiEndTime, 10) - now;
+                setTimeout(() => {
+                    confettiEngine.stop();
+                }, remainingDuration);
+            }
+        }
+        
+        // ===================================
+        // 3. THREE.JS CONFETTI ENGINE (Only handles 3D confetti particles)
+        // ===================================
+
+        class ConfettiEngine {
+            constructor() {
+                this.scene = new THREE.Scene();
+                this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+                this.particles = [];
+                // Confetti colors updated to match the new theme (Coral and Purple)
+                this.confettiColors = [0xFF7B65, 0xA46BF5, 0xffa500, 0x00ffff, 0xff00ff]; 
+                this.isAnimating = false;
+
+                this.setupRenderer();
+                this.setupScene();
+                this.setupListeners();
+            }
+
+            setupRenderer() {
+                this.renderer.setSize(window.innerWidth, window.innerHeight);
+                this.renderer.setPixelRatio(window.devicePixelRatio);
+                this.renderer.domElement.style.position = 'absolute';
+                this.renderer.domElement.style.top = '0';
+                confettiContainerEl.appendChild(this.renderer.domElement);
+                confettiContainerEl.style.opacity = '1';
+            }
+
+            setupScene() {
+                this.camera.position.z = 25;
+                
+                // Add ambient light
+                const ambientLight = new THREE.AmbientLight(0x404040, 5); 
+                this.scene.add(ambientLight);
+
+                // Add directional light
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 3);
+                directionalLight.position.set(0, 10, 5);
+                this.scene.add(directionalLight);
+            }
+
+            setupListeners() {
+                window.addEventListener('resize', this.onWindowResize.bind(this), false);
+            }
+
+            onWindowResize() {
+                this.camera.aspect = window.innerWidth / window.innerHeight;
+                this.camera.updateProjectionMatrix();
+                this.renderer.setSize(window.innerWidth, window.innerHeight);
+            }
+            
+            createConfettiParticle() {
+                const color = this.confettiColors[Math.floor(Math.random() * this.confettiColors.length)];
+                const geometry = new THREE.BoxGeometry(0.3, 0.3, 0.05);
+                const material = new THREE.MeshLambertMaterial({ color: color });
+                const mesh = new THREE.Mesh(geometry, material);
+
+                // Position the particle randomly above the view
+                mesh.position.x = (Math.random() - 0.5) * 40;
+                mesh.position.y = 20; // Start high up
+                mesh.position.z = (Math.random() - 0.5) * 50;
+
+                // Add random rotation velocity
+                mesh.userData.rotationSpeed = new THREE.Vector3(
+                    Math.random() * 0.1 - 0.05,
+                    Math.random() * 0.1 - 0.05,
+                    Math.random() * 0.1 - 0.05
+                );
+                // Add fall speed
+                mesh.userData.fallSpeed = 0.1 + Math.random() * 0.1;
+
+                this.scene.add(mesh);
+                this.particles.push(mesh);
+            }
+
+            animate() {
+                if (!this.isAnimating) return;
+
+                requestAnimationFrame(this.animate.bind(this));
+                
+                // Update and remove particles
+                for (let i = this.particles.length - 1; i >= 0; i--) {
+                    const p = this.particles[i];
+
+                    // Falling motion
+                    p.position.y -= p.userData.fallSpeed;
+                    
+                    // Rotation
+                    p.rotation.x += p.userData.rotationSpeed.x;
+                    p.rotation.y += p.userData.rotationSpeed.y;
+                    p.rotation.z += p.userData.rotationSpeed.z;
+
+                    // Remove if fallen below
+                    if (p.position.y < -20) {
+                        this.scene.remove(p);
+                        this.particles.splice(i, 1);
+                    }
+                }
+
+                // Continuously spawn new confetti particles (60% chance)
+                if (Math.random() > 0.4) {
+                    this.createConfettiParticle();
+                }
+
+                this.renderer.render(this.scene, this.camera);
+            }
+
+            start() {
+                if (this.isAnimating) return;
+                this.isAnimating = true;
+                this.animate();
+            }
+
+            stop() {
+                this.isAnimating = false;
+                confettiContainerEl.style.opacity = '0';
+                
+                // Clean up the scene after animation stops
+                setTimeout(() => {
+                    if (confettiContainerEl.contains(this.renderer.domElement)) {
+                        confettiContainerEl.removeChild(this.renderer.domElement);
+                    }
+                    this.particles = [];
+                }, 1000); // Wait for fade out transition
+            }
+        }
+        
+        // ===================================
+        // 4. INITIALIZATION
+        // ===================================
+
+        function init() {
+            // Display the configured target time/timezone
+            targetTimeDisplayEl.textContent = `Target Launch: ${TARGET_DATE_STR} at ${TARGET_TIME_STR} ${TARGET_TIMEZONE_DISPLAY}`;
+            
+            // Check if the timer has already ended
+            const now = new Date().getTime();
+            if (now >= TARGET_DATE) {
+                // If it's already past the launch date, handle the launch immediately
+                handleLaunch();
+            } else {
+                // Otherwise, start the countdown
+                updateCountdown();
+                intervalId = setInterval(updateCountdown, COUNTDOWN_INTERVAL);
+            }
+        }
+
+        // Wait for the window to load before starting the logic
+        window.onload = init;
+
+    </script>
+</body>
+</html>
