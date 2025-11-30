@@ -21,12 +21,11 @@
             background-color: #fcfcfc; /* Very light background */
             color: #1f2937; /* Dark text for contrast */
             display: flex;
-            flex-direction: column; /* Ensure body children stack vertically */
-            justify-content: center;
+            flex-direction: column; 
+            justify-content: flex-start; /* Start from the top, allowing content to stack */
             align-items: center;
             min-height: 100vh;
-            /* Adjusted padding-top for thinner h-16 navbar (4rem + 2rem buffer = 6rem) */
-            padding-top: 6rem; 
+            padding-top: 6rem;
         }
 
         /* Apply Space Grotesk to all headings */
@@ -50,10 +49,9 @@
 
         .countdown-segment {
             transition: transform 0.2s ease-out;
-            /* Ensure segments stay on one line and shrink gracefully on mobile */
             flex: 1 1 20%; 
             min-width: 0;
-            cursor: default; /* Keep consistency */
+            cursor: default; 
         }
         
         /* Custom class for the countdown numbers color (Purple: #A46BF5) */
@@ -75,10 +73,15 @@
             transition: opacity 1s;
         }
 
+        /* Custom class to force the confetti container visible */
+        .confetti-active {
+            opacity: 1 !important;
+        }
+
         /* Glassy Effect for Header/Footer */
         .glassy-bg {
-            background-color: rgba(255, 255, 255, 0.85); /* Slightly less transparent */
-            backdrop-filter: blur(8px); /* Apply blur for the glass effect */
+            background-color: rgba(255, 255, 255, 0.85); 
+            backdrop-filter: blur(8px); 
             -webkit-backdrop-filter: blur(8px);
         }
 
@@ -113,13 +116,12 @@
     </header>
 
     <!-- Three.js Confetti Container -->
-    <div id="confetti-container" class="opacity-0"></div>
+    <div id="confetti-container"></div>
 
     <!-- Main Content Container: pt-20/lg:pt-28 to shift content up -->
     <main class="w-full max-w-5xl mx-auto pt-20 pb-8 lg:pt-28 lg:pb-16 text-center z-10 flex-grow">
 
         <!-- Header and Timer -->
-        <!-- UPDATED: Reduced bottom margin from mb-16 to mb-10 to shift content up -->
         <div class="space-y-4 mb-10">
             <!-- Primary Heading: Very large, dark text, Space Grotesk. -->
             <h1 class="text-6xl sm:text-8xl lg:text-[7rem] xl:text-[9rem] font-extrabold tracking-tight text-gray-900 leading-none flex items-center justify-center">
@@ -145,16 +147,13 @@
         </div>
 
         <!-- Countdown Display Container (Optimized for Mobile) -->
-        <!-- UPDATED: Reduced top margin from mt-8 to mt-4 to shift timer up -->
         <div id="countdown-timer" class="mt-4 flex justify-center p-3 sm:p-4 border-2 rounded-xl mx-auto w-11/12 max-w-3xl timer-active bg-white shadow-xl">
             <!-- Inner container uses flexible layout to keep segments on one line -->
             <div class="flex justify-center items-center space-x-1 sm:space-x-4 w-full"> 
             
                 <!-- Days Wrapper -->
                 <div id="days-wrapper" class="countdown-segment flex flex-col items-center p-2 sm:p-5 bg-gray-50 rounded-lg hover:scale-[1.02]">
-                    <!-- Smaller text on mobile (text-2xl) -->
                     <span id="days" class="countdown-number text-2xl sm:text-5xl lg:text-7xl font-mono font-bold">00</span>
-                    <!-- Smaller label on mobile (text-[10px]) -->
                     <span class="text-[10px] sm:text-sm text-gray-600 uppercase tracking-wider mt-1">Days</span>
                 </div>
 
@@ -189,7 +188,6 @@
         
         <!-- Action Buttons (Explore PromptBud button) -->
         <div id="action-buttons" class="mt-8 flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 hidden">
-            <!-- Explore PromptBud Button: Coral background, Purple hover, fully rounded, Purple hover shadow -->
             <a href="https://promptzentest1.vercel.app" target="_blank" rel="noopener noreferrer"
                class="flex items-center justify-center px-8 py-4 text-lg font-bold rounded-full
                        bg-[#FF7B65] text-white /* Coral Orange background */
@@ -208,9 +206,7 @@
             <div class="space-y-4 text-gray-700 leading-relaxed text-base">
                 <p>PromptZen is a revolutionary platform designed for AI enthusiasts, prompt engineers, and creative minds to discover, share, and collaborate on the most effective AI prompts. In the rapidly evolving world of artificial intelligence, the quality of prompts determines the quality of outputs. PromptZen serves as a centralized hub where the community can contribute their most successful prompts across various AI models including ChatGPT, Midjourney, DALL-E, Stable Diffusion, and more.</p>
                 <p>Our mission is to democratize access to high-quality AI prompts and foster a community where both beginners and experts can learn from each other. Whether you're looking to generate stunning visual art, craft compelling stories, solve complex problems, or simply explore the capabilities of modern AI systems, PromptZen provides the tools and community support to help you achieve your creative goals.</p>
-                <!-- This paragraph is dark text -->
                 <p>The platform features a curated gallery of trending prompts, user submission system with admin moderation, and an intuitive interface that makes prompt discovery and sharing seamless. Every prompt on our platform is carefully reviewed to ensure quality and relevance, maintaining a high standard for our growing community of AI practitioners.</p>
-                <!-- This paragraph remains coral orange (#FF7B65) -->
                 <p class="font-semibold text-[#FF7B65]">Join us in shaping the future of human-AI collaboration. Share your insights, learn from others, and be part of the movement that's pushing the boundaries of what's possible with artificial intelligence.</p>
             </div>
         </section>
@@ -218,7 +214,7 @@
     </main>
 
     <!-- Footer Section - Glassy White Look -->
-    <footer class="mt-20 w-full glassy-bg border-t border-gray-200 shadow-md p-6 rounded-t-xl z-10">
+    <footer class="mt-auto w-full glassy-bg border-t border-gray-200 shadow-md p-6 rounded-t-xl z-10">
         <div class="max-w-5xl mx-auto text-center text-gray-600 space-y-2">
             <p class="text-sm flex items-center justify-center">
                 &copy; 2025 Code Ronins. All Rights Reserved.
@@ -240,7 +236,7 @@
         // Date format: YYYY-MM-DD
         const TARGET_DATE_STR = '2025-11-30';
         // Time format: HH:MM:SS AM/PM (e.g., 09:30:00 PM or 11:59:00 PM)
-        const TARGET_TIME_STR = '06:17:00 PM'; 
+        const TARGET_TIME_STR = '06:22:00 PM'; 
         
         // Use the explicit UTC offset for IST (+0530) for reliable JavaScript Date parsing.
         const TARGET_TIMEZONE_DISPLAY = 'IST (UTC+5:30)';
@@ -250,21 +246,18 @@
         const FULL_DATE_STRING = `${TARGET_DATE_STR} ${TARGET_TIME_STR} ${TARGET_TIMEZONE_OFFSET}`;
         const TARGET_DATE = new Date(FULL_DATE_STRING).getTime();
 
-        // --- END CONFIGURATION ---
-
-        const THREE_HOURS_MS = 3 * 60 * 60 * 1000;
+        // --- CONSTANTS ---
+        const TWO_HOURS_MS = 2 * 60 * 60 * 1000;
         const COUNTDOWN_INTERVAL = 1000;
         const CONFETTI_LIFETIME_KEY = 'promptbud_confetti_end_time';
         
         // DOM Elements
         const countdownTimerEl = document.getElementById('countdown-timer');
-        // Reference to the span containing the text that changes
         const countdownHeadingEl = document.getElementById('countdown-heading'); 
         const actionButtonsEl = document.getElementById('action-buttons');
         const confettiContainerEl = document.getElementById('confetti-container');
         const targetTimeDisplayEl = document.getElementById('target-time-display'); 
         const secondsLabelEl = document.getElementById('seconds-label');
-        // New reference for the wipe bar
         const wipeBarEl = document.getElementById('wipe-bar');
 
         // Time segment value elements
@@ -288,11 +281,10 @@
         
         // Updates the color of all time segments to gray after launch, or purple before launch.
         function updateTimerColors(isLaunch = false) {
-            // Restore Seconds label
             secondsLabelEl.textContent = 'Seconds'; 
 
             if (isLaunch) {
-                // Set all number colors to dark gray after launch (This triggers the CSS color transition)
+                // Set all number colors to dark gray after launch
                 Object.values(timeElements).forEach(el => {
                     el.style.color = '#737373'; // Dark gray color for all 00s
                 });
@@ -302,6 +294,27 @@
                     el.style.color = ''; // Use CSS default (which is purple via .countdown-number)
                 });
             }
+        }
+
+        // Helper function to set the UI to the final 'LIVE' state
+        function updateLaunchUIState() {
+            // 1. Set text
+            countdownHeadingEl.textContent = "Is LIVE!";
+
+            // 2. Show action buttons
+            actionButtonsEl.classList.remove('hidden');
+
+            // 3. Turn off the timer glow and apply inactive style
+            countdownTimerEl.classList.remove('timer-active');
+            countdownTimerEl.classList.add('timer-off');
+
+            // 4. Apply launch colors (gray 00s)
+            updateTimerColors(true);
+
+            // 5. Set all time units to 00
+            Object.values(timeElements).forEach(el => {
+                el.textContent = '00';
+            });
         }
         
         function updateCountdown() {
@@ -345,6 +358,7 @@
             countdownTimerEl.classList.add('timer-active');
         }
 
+        // Handles the visual launch animation and triggers confetti for the full 2 hours
         function handleLaunch() {
             const now = new Date().getTime();
 
@@ -353,49 +367,59 @@
             
             // 2. Wait for the bar to fully cover the text (0.5s is the halfway point of the 1s animation)
             setTimeout(() => {
-                // Update text and make it white (text-white class from Tailwind)
+                // Update text and make it white 
                 countdownHeadingEl.textContent = "Is LIVE!"; 
                 countdownHeadingEl.classList.add('text-white');
-            }, 500); // 500ms into the animation
+            }, 500); 
 
-            // 3. Wait for the animation to fully complete before showing buttons and confetti
+            // 3. Wait for the animation to fully complete before applying final UI state and starting confetti
             setTimeout(() => {
-                // Remove the text color override so it snaps back to Coral
+                // Remove the text color override and animation class
                 countdownHeadingEl.classList.remove('text-white');
+                wipeBarEl.classList.remove('slide-in-out');
+
+                // Apply static UI state
+                updateLaunchUIState(); 
+
+                // Set the new 2-hour window in localStorage immediately upon launch
+                const newEndTime = now + TWO_HOURS_MS;
+                localStorage.setItem(CONFETTI_LIFETIME_KEY, newEndTime);
+
+                // Run persistence check, which will start the confetti for the full duration
+                runConfettiPersistenceCheck(now); 
+
+            }, 1000);
+        }
+
+        // Handles starting confetti on page load if the launch window is still active
+        function runConfettiPersistenceCheck(now) {
+            let confettiEndTime = parseInt(localStorage.getItem(CONFETTI_LIFETIME_KEY), 10) || 0;
+            
+            // Check if we are within the confetti window
+            if (now < confettiEndTime) {
+                const remainingDuration = confettiEndTime - now;
                 
-                // Show action buttons
-                actionButtonsEl.classList.remove('hidden');
-
-                // Turn off the timer glow and apply inactive style
-                countdownTimerEl.classList.remove('timer-active');
-                countdownTimerEl.classList.add('timer-off');
-
-                // Apply launch colors (gray 00s)
-                updateTimerColors(true); 
-
-                // Set all time units to 00 instantly
-                Object.values(timeElements).forEach(el => {
-                    el.textContent = '00';
-                });
-
-                // Confetti Logic
-                let confettiEndTime = localStorage.getItem(CONFETTI_LIFETIME_KEY);
-
-                if (!confettiEndTime) {
-                    confettiEndTime = now + TWO_HOURS_MS;
-                    localStorage.setItem(CONFETTI_LIFETIME_KEY, confettiEndTime);
-                }
-                
-                if (now < parseInt(confettiEndTime, 10)) {
+                // Start engine if not running 
+                if (!confettiEngine) { 
                     confettiEngine = new ConfettiEngine();
                     confettiEngine.start();
-                    
-                    const remainingDuration = parseInt(confettiEndTime, 10) - now;
-                    setTimeout(() => {
-                        confettiEngine.stop();
-                    }, remainingDuration);
                 }
-            }, 1000); // 1000ms is the full duration of the slideWipe animation
+
+                // Set timeout to stop confetti and clear local storage
+                setTimeout(() => {
+                    if (confettiEngine) {
+                        confettiEngine.stop();
+                        confettiEngine = null;
+                        localStorage.removeItem(CONFETTI_LIFETIME_KEY); 
+                    }
+                }, remainingDuration);
+                
+                return true;
+            } else {
+                // Confetti duration expired, clean up just in case
+                localStorage.removeItem(CONFETTI_LIFETIME_KEY);
+                return false;
+            }
         }
         
         // ===================================
@@ -422,18 +446,17 @@
                 this.renderer.setPixelRatio(window.devicePixelRatio);
                 this.renderer.domElement.style.position = 'absolute';
                 this.renderer.domElement.style.top = '0';
-                confettiContainerEl.appendChild(this.renderer.domElement);
-                confettiContainerEl.style.opacity = '1';
+                // Note: Opacity is now controlled by CSS class .confetti-active
+                confettiContainerEl.appendChild(this.renderer.domElement); 
             }
 
             setupScene() {
                 this.camera.position.z = 25;
                 
-                // Add ambient light
+                // Add lighting
                 const ambientLight = new THREE.AmbientLight(0x404040, 5); 
                 this.scene.add(ambientLight);
 
-                // Add directional light
                 const directionalLight = new THREE.DirectionalLight(0xffffff, 3);
                 directionalLight.position.set(0, 10, 5);
                 this.scene.add(directionalLight);
@@ -460,13 +483,12 @@
                 mesh.position.y = 20; // Start high up
                 mesh.position.z = (Math.random() - 0.5) * 50;
 
-                // Add random rotation velocity
+                // Add random rotation and fall velocity
                 mesh.userData.rotationSpeed = new THREE.Vector3(
                     Math.random() * 0.1 - 0.05,
                     Math.random() * 0.1 - 0.05,
                     Math.random() * 0.1 - 0.05
                 );
-                // Add fall speed
                 mesh.userData.fallSpeed = 0.1 + Math.random() * 0.1;
 
                 this.scene.add(mesh);
@@ -507,13 +529,14 @@
 
             start() {
                 if (this.isAnimating) return;
+                confettiContainerEl.classList.add('confetti-active'); // Turn on visibility via class
                 this.isAnimating = true;
                 this.animate();
             }
 
             stop() {
                 this.isAnimating = false;
-                confettiContainerEl.style.opacity = '0';
+                confettiContainerEl.classList.remove('confetti-active'); // Start fade out
                 
                 // Clean up the scene after animation stops
                 setTimeout(() => {
@@ -536,15 +559,14 @@
             // Display the configured target time/timezone
             targetTimeDisplayEl.textContent = `Target Launch: ${TARGET_DATE_STR} at ${TARGET_TIME_STR} ${TARGET_TIMEZONE_DISPLAY}`;
             
-            // Check if the timer has already ended
             const now = new Date().getTime();
             if (now >= TARGET_DATE) {
-                // If it's already past the launch date, handle the launch immediately
-                // Using a small timeout here ensures the page elements are rendered before we manipulate them
-                setTimeout(() => {
-                     handleLaunch();
-                }, 100); 
-               
+                // If it's already past the launch date, apply the final UI state
+                updateLaunchUIState();
+                
+                // Check if we need to continue showing confetti (in case of page refresh during the 2-hour window)
+                runConfettiPersistenceCheck(now);
+                
             } else {
                 // Otherwise, start the countdown
                 updateCountdown();
