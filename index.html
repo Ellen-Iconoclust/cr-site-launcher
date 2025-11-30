@@ -6,13 +6,13 @@
     <title>PromptBud Launch Countdown</title>
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Load Lucide Icons - FIX: Removed brackets and added type="module" -->
+    <!-- Load Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest" type="module"></script>
-    <!-- Load Three.js for Confetti - FIX: Removed brackets -->
+    <!-- Load Three.js for Confetti -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <style>
-        /* Correct Space Grotesk import with proper weight range - FIX: Removed brackets from URL */
+        /* Correct Space Grotesk import with proper weight range */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Space+Grotesk:wght@300..700&display=swap');
         
         /* Custom styles for Light Theme */
@@ -25,7 +25,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            /* FIX 1: Adjusted padding-top for thinner h-16 navbar (4rem + 2rem buffer = 6rem) */
+            /* Adjusted padding-top for thinner h-16 navbar (4rem + 2rem buffer = 6rem) */
             padding-top: 6rem; 
         }
 
@@ -36,8 +36,7 @@
 
         /* Active Glow for Timer (Purple: #A46BF5) */
         .timer-active {
-            /* FIX 3: Adjusted box-shadow to be slightly higher and a bit stronger for better visual impact */
-            box-shadow: 0 -2px 14px 5px rgba(164, 107, 245, 0.75); /* Upward shift and increased size/intensity */
+            box-shadow: 0 -2px 14px 5px rgba(164, 107, 245, 0.75); 
             border-color: #A46BF5;
             transition: box-shadow 0.5s ease-in-out, border-color 0.5s ease-in-out;
         }
@@ -60,7 +59,6 @@
         /* Custom class for the countdown numbers color (Purple: #A46BF5) */
         .countdown-number {
             color: #A46BF5;
-            /* UPDATED FIX: Removed opacity transition, added smooth color transition for launch */
             transition: color 1s ease-out; 
         }
 
@@ -90,7 +88,6 @@
     <!-- 1. NAVIGATION BAR -->
     <header class="fixed top-0 left-0 w-full z-40 glassy-bg border-b border-gray-200 shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- FIX 2: Reduced height from h-20 (80px) to h-16 (64px) for a thinner look -->
             <div class="flex items-center justify-between h-16">
                 <a href="#" class="flex items-center space-x-2 no-underline">
                     <i data-lucide="rocket" class="w-6 h-6 text-[#A46BF5]"></i>
@@ -105,8 +102,8 @@
     <!-- Three.js Confetti Container -->
     <div id="confetti-container" class="opacity-0"></div>
 
-    <!-- UPDATED FIX: Increased top padding for better vertical centering (pt-24, lg:pt-36) -->
-    <main class="w-full max-w-5xl mx-auto pt-12 pb-8 lg:pt-36 lg:pb-16 text-center z-10 flex-grow">
+    <!-- UPDATE: Reduced top padding from pt-24 to pt-20 and lg:pt-36 to lg:pt-28 to shift content UP -->
+    <main class="w-full max-w-5xl mx-auto pt-20 pb-8 lg:pt-28 lg:pb-16 text-center z-10 flex-grow">
 
         <!-- Header and Timer -->
         <div class="space-y-4 mb-16">
@@ -219,7 +216,7 @@
         // Date format: YYYY-MM-DD
         const TARGET_DATE_STR = '2025-11-30';
         // Time format: HH:MM:SS AM/PM (e.g., 09:30:00 PM or 11:59:00 PM)
-        const TARGET_TIME_STR = '03:55:00 PM'; 
+        const TARGET_TIME_STR = '03:38:00 PM'; 
         
         // Use the explicit UTC offset for IST (+0530) for reliable JavaScript Date parsing.
         const TARGET_TIMEZONE_DISPLAY = 'IST (UTC+5:30)';
@@ -306,11 +303,11 @@
 
             const segments = ['days', 'hours', 'minutes', 'seconds'];
             
-            // FIX: Reverted to instant number update per user request (no fade-out/in)
+            // Instant number update
             segments.forEach(segment => {
                 const el = timeElements[segment];
                 const newValue = newValues[segment];
-                el.textContent = newValue; // Instant update
+                el.textContent = newValue; 
             });
 
             // Ensure normal colors are applied
@@ -491,8 +488,7 @@
         // ===================================
 
         function init() {
-            // FIX: Initialize Lucide Icons inside the window.onload handler (via init()) 
-            // to ensure the external module is fully loaded first.
+            // Initialize Lucide Icons
             lucide.createIcons();
 
             // Display the configured target time/timezone
