@@ -115,18 +115,18 @@
     <!-- Three.js Confetti Container -->
     <div id="confetti-container" class="opacity-0"></div>
 
-    <!-- UPDATE: Reduced top padding from pt-24 to pt-20 and lg:pt-36 to lg:pt-28 to shift content UP -->
+    <!-- Main Content Container: pt-20/lg:pt-28 to shift content up -->
     <main class="w-full max-w-5xl mx-auto pt-20 pb-8 lg:pt-28 lg:pb-16 text-center z-10 flex-grow">
 
         <!-- Header and Timer -->
-        <div class="space-y-4 mb-16">
+        <!-- UPDATED: Reduced bottom margin from mb-16 to mb-10 to shift content up -->
+        <div class="space-y-4 mb-10">
             <!-- Primary Heading: Very large, dark text, Space Grotesk. -->
             <h1 class="text-6xl sm:text-8xl lg:text-[7rem] xl:text-[9rem] font-extrabold tracking-tight text-gray-900 leading-none flex items-center justify-center">
                 PromptBud
             </h1>
             
             <!-- Secondary Heading: Coral Orange (#FF7B65), Space Grotesk font -->
-            <!-- WRAPPER for the Wipe Animation. Using inline-block to match the H2 width. -->
             <h2 id="countdown-heading-wrapper" class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-none mx-auto inline-block relative overflow-hidden" 
                 style="color: #FF7B65;">
                 
@@ -145,7 +145,8 @@
         </div>
 
         <!-- Countdown Display Container (Optimized for Mobile) -->
-        <div id="countdown-timer" class="mt-8 flex justify-center p-3 sm:p-4 border-2 rounded-xl mx-auto w-11/12 max-w-3xl timer-active bg-white shadow-xl">
+        <!-- UPDATED: Reduced top margin from mt-8 to mt-4 to shift timer up -->
+        <div id="countdown-timer" class="mt-4 flex justify-center p-3 sm:p-4 border-2 rounded-xl mx-auto w-11/12 max-w-3xl timer-active bg-white shadow-xl">
             <!-- Inner container uses flexible layout to keep segments on one line -->
             <div class="flex justify-center items-center space-x-1 sm:space-x-4 w-full"> 
             
@@ -239,7 +240,7 @@
         // Date format: YYYY-MM-DD
         const TARGET_DATE_STR = '2025-11-30';
         // Time format: HH:MM:SS AM/PM (e.g., 09:30:00 PM or 11:59:00 PM)
-        const TARGET_TIME_STR = '04:04:00 PM'; 
+        const TARGET_TIME_STR = '03:38:00 PM'; 
         
         // Use the explicit UTC offset for IST (+0530) for reliable JavaScript Date parsing.
         const TARGET_TIMEZONE_DISPLAY = 'IST (UTC+5:30)';
