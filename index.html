@@ -124,8 +124,8 @@
         <!-- Header and Timer -->
         <div class="space-y-4 mb-10">
             <!-- Primary Heading: Very large, dark text, Space Grotesk. -->
-            <h1 class="text-6xl sm:text-8xl lg:text-[7rem] xl:text-[9rem] font-extrabold tracking-tight text-gray-900 leading-none flex items-center justify-center">
-                PromptBud
+            <h1 class="text-4xl sm:text-6xl lg:text-[5rem] xl:text-[6rem] font-extrabold tracking-tight text-gray-900 leading-none flex items-center justify-center mb-6">
+                Launching Experiences
             </h1>
             
             <!-- Secondary Heading: Coral Orange (#FF7B65), Space Grotesk font -->
@@ -144,6 +144,11 @@
             
             <!-- Target Time/Timezone Display (Darker text for contrast) -->
             <p id="target-time-display" class="text-lg text-gray-700 mt-4 font-medium"></p>
+        </div>
+
+        <!-- Toast for No New Releases -->
+        <div id="no-release-toast" class="hidden mx-auto bg-gray-800 text-white text-sm px-4 py-2 rounded-full mb-4 w-max shadow-md relative z-20">
+            No new releases
         </div>
 
         <!-- Countdown Display Container (Optimized for Mobile) -->
@@ -186,28 +191,34 @@
             </div>
         </div>
         
-        <!-- Action Buttons (Explore PromptBud button) -->
-        <div id="action-buttons" class="mt-8 flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 hidden">
-            <a href="https://promptbud.vercel.app" target="_blank" rel="noopener noreferrer"
-               class="flex items-center justify-center px-8 py-4 text-lg font-bold rounded-full
-                       bg-[#FF7B65] text-white /* Coral Orange background */
-                       shadow-lg shadow-[#FF7B65]/50 /* Coral Shadow */
-                       transition duration-300 ease-in-out transform hover:scale-[1.03] 
-                       hover:bg-[#A46BF5] hover:shadow-lg hover:shadow-[#A46BF5]/70 /* Purple hover background and shadow */">
-                <i data-lucide="star" class="w-5 h-5 mr-3"></i>
-                Explore PromptBud
-            </a>
-        </div>
-
-        <!-- What is PromptBud Section (White background, Dark text) -->
+        <!-- Our Releases Section -->
         <section class="mt-20 text-left p-6 sm:p-8 bg-white rounded-2xl shadow-xl border border-gray-200">
-            <!-- Heading Color is Coral Orange (#FF7B65) -->
-            <h2 class="text-3xl font-bold text-[#FF7B65] mb-6 border-b border-gray-300 pb-2">What is PromptBud?</h2>
-            <div class="space-y-4 text-gray-700 leading-relaxed text-base">
-                <p>PromptBud is a revolutionary platform designed for AI enthusiasts, prompt engineers, and creative minds to discover, share, and collaborate on the most effective AI prompts. In the rapidly evolving world of artificial intelligence, the quality of prompts determines the quality of outputs. PromptBud serves as a centralized hub where the community can contribute their most successful prompts across various AI models including ChatGPT, Midjourney, DALL-E, Stable Diffusion, and more.</p>
-                <p>Our mission is to democratize access to high-quality AI prompts and foster a community where both beginners and experts can learn from each other. Whether you're looking to generate stunning visual art, craft compelling stories, or simply explore the capabilities of modern AI systems, PromptBud provides the tools and community support to help you achieve your creative goals.</p>
-                <p>The platform features a curated gallery of trending prompts, user submission system with admin moderation, and an intuitive interface that makes prompt discovery and sharing seamless. Every prompt on our platform is carefully reviewed to ensure quality and relevance, maintaining a high standard for our growing community of AI practitioners.</p>
-                <p class="font-semibold text-[#FF7B65]">Join us in shaping the future of human-AI collaboration. Share your insights, learn from others, and be part of the movement that's pushing the boundaries of what's possible with artificial intelligence.</p>
+            <h2 class="text-3xl font-bold text-[#A46BF5] mb-6 border-b border-gray-300 pb-2">Our Releases</h2>
+            
+            <div class="space-y-4">
+                <!-- Release Card 1 -->
+                <div class="flex flex-col sm:flex-row items-center justify-between p-4 border border-gray-200 rounded-xl hover:shadow-md transition-shadow bg-gray-50">
+                    <span class="font-bold text-gray-800 text-lg mb-2 sm:mb-0">PromptBud Release Candidate Alpha-5.00</span>
+                    <a href="https://promptbud-static.vercel.app" target="_blank" class="px-6 py-2 bg-[#FF7B65] text-white font-medium rounded-lg hover:bg-[#A46BF5] transition-colors">Visit</a>
+                </div>
+
+                <!-- Release Card 2 -->
+                <div class="flex flex-col sm:flex-row items-center justify-between p-4 border border-gray-200 rounded-xl hover:shadow-md transition-shadow bg-gray-50">
+                    <span class="font-bold text-gray-800 text-lg mb-2 sm:mb-0">PromptBud Official Release - Alpha: 4.00</span>
+                    <a href="https://promptbud.vercel.app" target="_blank" class="px-6 py-2 bg-[#FF7B65] text-white font-medium rounded-lg hover:bg-[#A46BF5] transition-colors">Visit</a>
+                </div>
+
+                <!-- Release Card 3 -->
+                <div class="flex flex-col sm:flex-row items-center justify-between p-4 border border-gray-200 rounded-xl hover:shadow-md transition-shadow bg-gray-50">
+                    <span class="font-bold text-gray-800 text-lg mb-2 sm:mb-0">Xamplore - Official Release V: Xam4.0</span>
+                    <a href="https://xamplore1.vercel.app" target="_blank" class="px-6 py-2 bg-[#FF7B65] text-white font-medium rounded-lg hover:bg-[#A46BF5] transition-colors">Visit</a>
+                </div>
+
+                <!-- Release Card 4 -->
+                <div class="flex flex-col sm:flex-row items-center justify-between p-4 border border-gray-200 rounded-xl hover:shadow-md transition-shadow bg-gray-50">
+                    <span class="font-bold text-gray-800 text-lg mb-2 sm:mb-0">Code Ronins - Official Site</span>
+                    <a href="https://coderonins.vercel.app" target="_blank" class="px-6 py-2 bg-[#FF7B65] text-white font-medium rounded-lg hover:bg-[#A46BF5] transition-colors">Visit</a>
+                </div>
             </div>
         </section>
 
@@ -233,10 +244,10 @@
         
         // --- EDIT THIS CONFIGURATION TO SET THE LAUNCH TIME ---
         
-        // Date format: YYYY-MM-DD
-        const TARGET_DATE_STR = '2025-12-06';
+        // Date format: YYYY-MM-DD (Leave empty '' if no new releases)
+        const TARGET_DATE_STR = '';
         // Time format: HH:MM:SS AM/PM (e.g., 09:30:00 PM or 11:59:00 PM)
-        const TARGET_TIME_STR = '08:00:00 PM'; 
+        const TARGET_TIME_STR = ''; 
         
         // Use the explicit UTC offset for IST (+0530) for reliable JavaScript Date parsing.
         const TARGET_TIMEZONE_DISPLAY = 'IST (UTC+5:30)';
@@ -244,7 +255,7 @@
 
         // Combine configuration strings for JavaScript Date parsing
         const FULL_DATE_STRING = `${TARGET_DATE_STR} ${TARGET_TIME_STR} ${TARGET_TIMEZONE_OFFSET}`;
-        const TARGET_DATE = new Date(FULL_DATE_STRING).getTime();
+        const TARGET_DATE = TARGET_DATE_STR ? new Date(FULL_DATE_STRING).getTime() : 0;
 
         // --- CONSTANTS ---
         const TWO_HOURS_MS = 2 * 60 * 60 * 1000;
@@ -254,11 +265,11 @@
         // DOM Elements
         const countdownTimerEl = document.getElementById('countdown-timer');
         const countdownHeadingEl = document.getElementById('countdown-heading'); 
-        const actionButtonsEl = document.getElementById('action-buttons');
         const confettiContainerEl = document.getElementById('confetti-container');
         const targetTimeDisplayEl = document.getElementById('target-time-display'); 
         const secondsLabelEl = document.getElementById('seconds-label');
         const wipeBarEl = document.getElementById('wipe-bar');
+        const noReleaseToastEl = document.getElementById('no-release-toast');
 
         // Time segment value elements
         const timeElements = {
@@ -301,17 +312,14 @@
             // 1. Set text
             countdownHeadingEl.textContent = "Is LIVE!";
 
-            // 2. Show action buttons
-            actionButtonsEl.classList.remove('hidden');
-
-            // 3. Turn off the timer glow and apply inactive style
+            // 2. Turn off the timer glow and apply inactive style
             countdownTimerEl.classList.remove('timer-active');
             countdownTimerEl.classList.add('timer-off');
 
-            // 4. Apply launch colors (gray 00s)
+            // 3. Apply launch colors (gray 00s)
             updateTimerColors(true);
 
-            // 5. Set all time units to 00
+            // 4. Set all time units to 00
             Object.values(timeElements).forEach(el => {
                 el.textContent = '00';
             });
@@ -555,6 +563,22 @@
         function init() {
             // Initialize Lucide Icons
             lucide.createIcons();
+
+            if (!TARGET_DATE_STR || !TARGET_TIME_STR) {
+                // Show "No new releases" toast
+                if (noReleaseToastEl) noReleaseToastEl.classList.remove('hidden');
+                
+                // Set text to indicate no active launch
+                countdownHeadingEl.textContent = "No Upcoming Release";
+                targetTimeDisplayEl.textContent = "Check back later for updates.";
+                
+                // Make timer inactive and zeroed
+                countdownTimerEl.classList.remove('timer-active');
+                countdownTimerEl.classList.add('timer-off');
+                updateTimerColors(true);
+                Object.values(timeElements).forEach(el => { el.textContent = '00'; });
+                return;
+            }
 
             // Display the configured target time/timezone
             targetTimeDisplayEl.textContent = `Target Launch: ${TARGET_DATE_STR} at ${TARGET_TIME_STR} ${TARGET_TIMEZONE_DISPLAY}`;
